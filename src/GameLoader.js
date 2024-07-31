@@ -17,6 +17,25 @@ const GameLoader = ({ gameData }) => {
         const scriptContent = await scriptResponse.text();
         
         console.log('Fetched script content:', scriptContent);
+import React, { useState, useEffect } from 'react';
+
+const GameLoader = ({ gameData }) => {
+  const [gameComponent, setGameComponent] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const loadGame = async () => {
+      try {
+        console.log('Attempting to load game:', gameData.id);
+        
+        // Fetch the game script
+        const scriptResponse = await fetch(gameData.scriptUrl);
+        if (!scriptResponse.ok) {
+          throw new Error(`Failed to fetch script: ${scriptResponse.statusText}`);
+        }
+        const scriptContent = await scriptResponse.text();
+        
+        console.log('Fetched script content:', scriptContent);
 
         // Create and execute script
         const scriptElement = document.createElement('script');
